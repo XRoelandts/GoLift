@@ -13,6 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.golift.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,7 +25,6 @@ public class SignInActivity extends AppCompatActivity {
 
     EditText usernameText;
     EditText passwordText;
-    EditText dobText;
     FirebaseDatabase database;
     FirebaseAuth auth;
 
@@ -35,10 +35,10 @@ public class SignInActivity extends AppCompatActivity {
                 DatabaseReference userReference = database.getReference("users");
                 String uid = userReference.push().getKey();
                 User user = new User();
-                user.setDOB(dobText.getText().toString());
+                user.setPassword(passwordText.getText().toString());
                 user.setName(usernameText.getText().toString());
                 userReference.child(uid).setValue(user);
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
                 startActivity(intent);
 

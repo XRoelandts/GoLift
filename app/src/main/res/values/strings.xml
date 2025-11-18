@@ -4,4 +4,13 @@
     <string name="textview">TextView</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">Username</string>
+    <string name="fitness_mode_findable">Fitness Mode Findable</string>
+    <string name="go_lift">Go Lift</string>
+    <string name="password">Password</string>
+    <string name="passcode">Passcode</string>
+    <string name="name">Name</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_in">Log in</string>
+    <string name="forgot_password">Forgot Password</string>
 </resources>

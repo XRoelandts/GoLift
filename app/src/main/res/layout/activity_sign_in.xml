@@ -9,78 +9,84 @@
     tools:context=".SignInActivity">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/user_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/username"
         tools:layout_editor_absoluteX="98dp"
         tools:layout_editor_absoluteY="281dp" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/user_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:text="Name"
+        android:text="@string/name"
         tools:layout_editor_absoluteX="107dp"
         tools:layout_editor_absoluteY="300dp" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/pass_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/password"
         tools:layout_editor_absoluteX="98dp"
         tools:layout_editor_absoluteY="357dp" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/pass_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:text="Name"
+        android:text="@string/passcode"
         tools:layout_editor_absoluteX="109dp"
         tools:layout_editor_absoluteY="384dp" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/goLift_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="177dp"
+        android:text="@string/go_lift"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="141dp" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/fmf_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="169dp" />
+        android:text="@string/fitness_mode_findable"
+        app:layout_constraintBottom_toTopOf="@+id/user_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goLift_label"
+        app:layout_constraintVertical_bias="0.176" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="151dp"
-        tools:layout_editor_absoluteY="478dp" />
+        android:id="@+id/signup_button"
+        android:layout_width="153dp"
+        android:layout_height="53dp"
+        android:text="@string/sign_up"
+        tools:layout_editor_absoluteX="129dp"
+        tools:layout_editor_absoluteY="531dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/login_button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="149dp"
-        tools:layout_editor_absoluteY="548dp" />
+        android:layout_marginTop="13dp"
+        android:text="@string/log_in"
+        app:layout_constraintTop_toBottomOf="@+id/signup_button"
+        tools:layout_editor_absoluteX="161dp" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/forgotPass_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="258dp"
-        tools:layout_editor_absoluteY="429dp" />
+        android:text="@string/forgot_password"
+        tools:layout_editor_absoluteX="261dp"
+        tools:layout_editor_absoluteY="467dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
