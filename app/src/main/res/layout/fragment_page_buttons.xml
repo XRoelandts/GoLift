@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".pageButtonsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/workoutsB"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="34dp"
+            android:text="Button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/searchB"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="34dp"
+            android:text="Button"
+            app:layout_constraintStart_toEndOf="@+id/workoutsB"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/homeB"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="34dp"
+            android:text="Button"
+            app:layout_constraintStart_toEndOf="@+id/searchB"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/savedB"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="34dp"
+            android:text="Button"
+            app:layout_constraintStart_toEndOf="@+id/homeB"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/profileB"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="34dp"
+            android:text="Button"
+            app:layout_constraintStart_toEndOf="@+id/savedB"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
