@@ -7,9 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 public class MainActivity extends AppCompatActivity {
 
+    FragmentManager fg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,5 +26,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
+
+        if (savedInstanceState == null) {
+            fg = getSupportFragmentManager();
+            FragmentTransaction trans = fg.beginTransaction();
+            pageButtonsFragment pageButtons = new pageButtonsFragment();
+            trans.add(R.id.buttonFragments, pageButtons, "buttonsFrag");
+
+            trans.commit();
+        }
     }
 }
