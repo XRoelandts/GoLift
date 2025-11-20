@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 
@@ -31,6 +32,12 @@ public class muscleGroupsFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_muscle_groups, container, false);
+        View view =  inflater.inflate(R.layout.fragment_muscle_groups, container, false);
+
+        lv = view.findViewById(R.id.bicepLV);
+        // ListAdapter
+
+
+        return view;
     }
 }
