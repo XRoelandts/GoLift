@@ -9,10 +9,20 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 public class WorkoutActivity extends AppCompatActivity {
 
     FragmentManager fg;
+
+    ViewPager vp;
+
+    TabLayout tab;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,5 +42,10 @@ public class WorkoutActivity extends AppCompatActivity {
 
             trans.commit();
         }
+
+        vp = findViewById(R.id.workoutVP);
+        tab = findViewById(R.id.workoutTab);
+
+
     }
 }
