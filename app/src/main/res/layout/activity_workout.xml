@@ -19,34 +19,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/workoutTab"
-        android:layout_width="407dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="15dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/WorkoutsHeader">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Workouts" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Muscle Groups" />
-
-    </com.google.android.material.tabs.TabLayout>
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/workoutVP"
         android:layout_width="409dp"
         android:layout_height="485dp"
         android:layout_marginStart="1dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/workoutTab" />
+        app:layout_constraintTop_toBottomOf="@+id/workoutTab" >
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/workoutTab"
+            android:layout_width="407dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="15dp">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Workouts" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Muscle Groups" />
+
+        </com.google.android.material.tabs.TabLayout>
+    </androidx.viewpager2.widget.ViewPager2>
 
     <TextView
         android:id="@+id/WorkoutsHeader"

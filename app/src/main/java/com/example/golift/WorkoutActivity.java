@@ -43,9 +43,10 @@ public class WorkoutActivity extends AppCompatActivity {
             trans.commit();
         }
 
+
         vp = findViewById(R.id.workoutVP);
-        tab = findViewById(R.id.workoutTab);
+        TabLayout tabLayout = findViewById(R.id.workoutTab);
 
-
+        tabLayout.setupWithViewPager(vp);
     }
 }
