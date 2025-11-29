@@ -49,4 +49,8 @@ public class WorkoutActivity extends AppCompatActivity {
 
         tabLayout.setupWithViewPager(vp);
     }
+
+    // add request for workout api, thinking of using JSONObject use code from brock Assignment 5
+    // https://www.api-ninjas.com/api/exercises - link to api
+
 }
