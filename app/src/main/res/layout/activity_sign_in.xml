@@ -12,39 +12,46 @@
         android:id="@+id/user_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="98dp"
+        android:layout_marginTop="281dp"
         android:text="@string/username"
         android:textColor="@color/white"
-        tools:layout_editor_absoluteX="98dp"
-        tools:layout_editor_absoluteY="281dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/user_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
         android:ems="10"
         android:inputType="text"
-        android:text="@string/name"
-        tools:layout_editor_absoluteX="107dp"
-        tools:layout_editor_absoluteY="300dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/pass_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="358dp"
         android:text="@string/password"
         android:textColor="@color/white"
-        tools:layout_editor_absoluteX="98dp"
-        tools:layout_editor_absoluteY="357dp" />
+        app:layout_constraintStart_toStartOf="@+id/user_label"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/pass_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="384dp"
         android:ems="10"
         android:inputType="text"
-        android:text="@string/passcode"
-        tools:layout_editor_absoluteX="109dp"
-        tools:layout_editor_absoluteY="384dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/goLift_label"
@@ -73,24 +80,39 @@
         android:id="@+id/signup_button"
         android:layout_width="153dp"
         android:layout_height="53dp"
+        android:layout_marginBottom="307dp"
         android:text="@string/sign_up"
-        tools:layout_editor_absoluteX="129dp"
-        tools:layout_editor_absoluteY="531dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/login_button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="13dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="246dp"
         android:text="@string/log_in"
-        app:layout_constraintTop_toBottomOf="@+id/signup_button"
-        tools:layout_editor_absoluteX="161dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_button" />
 
     <Button
         android:id="@+id/forgotPass_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="239dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="376dp"
         android:text="@string/forgot_password"
-        tools:layout_editor_absoluteX="239dp"
-        tools:layout_editor_absoluteY="467dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pass_field" />
 </androidx.constraintlayout.widget.ConstraintLayout>
