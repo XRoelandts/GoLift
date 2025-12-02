@@ -8,13 +8,17 @@ import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.renderscript.RenderScript;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.golift.R;
+
+import org.json.JSONObject;
 
 
 public class muscleGroupsFrag extends Fragment {
@@ -142,12 +146,12 @@ public class muscleGroupsFrag extends Fragment {
 
     // API
 
-    /*
+
     private void makeRequest(String idNum){
         ANRequest req = AndroidNetworking.get("https://pokeapi.co/api/v2/pokemon/{id}")
                 .addPathParameter("id", idNum)
                 //.addQueryParameter("apikey", API_KEY)
-                .setPriority(Priority.LOW)
+                .setPriority(RenderScript.Priority.LOW)
                 .build();
         req.getAsJSONObject(new JSONObjectRequestListener() {
             @Override
@@ -162,7 +166,7 @@ public class muscleGroupsFrag extends Fragment {
 
 
 
-     */
+
 
 
 }
