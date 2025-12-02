@@ -1,4 +1,4 @@
-package com.example.golift.model;
+package com.example.golift.workout;
 
 import android.os.Bundle;
 

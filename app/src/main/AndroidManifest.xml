@@ -12,19 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoLift">
         <activity
-            android:name=".WorkoutActivity"
+            android:name=".workout.WorkoutActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".profile.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".SavedActivity"
+            android:name=".saved.SavedActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchActivity"
+            android:name=".search.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".SignInActivity"
+            android:name=".signIn.SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

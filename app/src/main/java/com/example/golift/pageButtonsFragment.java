@@ -10,6 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.golift.search.SearchActivity;
+import com.example.golift.profile.ProfileActivity;
+import com.example.golift.saved.SavedActivity;
+import com.example.golift.workout.WorkoutActivity;
+
 
 public class pageButtonsFragment extends Fragment {
 

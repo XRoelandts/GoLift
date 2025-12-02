@@ -1,4 +1,4 @@
-package com.example.golift;
+package com.example.golift.saved;
 
 import android.os.Bundle;
 
@@ -10,16 +10,17 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public class SearchActivity extends AppCompatActivity {
+import com.example.golift.R;
+import com.example.golift.pageButtonsFragment;
+
+public class SavedActivity extends AppCompatActivity {
 
     FragmentManager fg;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_saved);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

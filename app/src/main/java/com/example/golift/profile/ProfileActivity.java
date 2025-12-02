@@ -1,4 +1,4 @@
-package com.example.golift;
+package com.example.golift.profile;
 
 import android.os.Bundle;
 
@@ -9,6 +9,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.golift.R;
+import com.example.golift.pageButtonsFragment;
 
 public class ProfileActivity extends AppCompatActivity {
 

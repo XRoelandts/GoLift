@@ -1,4 +1,4 @@
-package com.example.golift;
+package com.example.golift.workout;
 
 import android.os.Bundle;
 
@@ -11,6 +11,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.golift.R;
+import com.example.golift.pageButtonsFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class WorkoutActivity extends AppCompatActivity {

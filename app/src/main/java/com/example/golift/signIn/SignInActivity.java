@@ -1,4 +1,4 @@
-package com.example.golift;
+package com.example.golift.signIn;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.golift.MainActivity;
+import com.example.golift.R;
 import com.example.golift.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

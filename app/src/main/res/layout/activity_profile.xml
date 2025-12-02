@@ -5,17 +5,31 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    android:background="@color/grey"
+    tools:context=".profile.ProfileActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/buttonFragments"
-        android:name="com.example.golift.pageButtonsFragment"
-        android:layout_width="408dp"
-        android:layout_height="82dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="50dp"
+        tools:layout_editor_absoluteY="575dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="45dp"
+        tools:layout_editor_absoluteY="75dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
