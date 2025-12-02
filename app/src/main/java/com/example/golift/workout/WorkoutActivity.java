@@ -45,11 +45,13 @@ public class WorkoutActivity extends AppCompatActivity {
             trans.commit();
         }
 
-
+        /*
         vp = findViewById(R.id.workoutVP);
         TabLayout tabLayout = findViewById(R.id.workoutTab);
 
         tabLayout.setupWithViewPager(vp);
+
+         */
     }
 
     // add request for workout api, thinking of using JSONObject use code from brock Assignment 5
