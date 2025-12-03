@@ -151,9 +151,11 @@ public class muscleGroupsFrag extends Fragment {
 
     // API
 
+    // Key :
+
 
     private void makeRequest(String idNum) {
-        ANRequest req = AndroidNetworking.get("https://pokeapi.co/api/v2/pokemon/{id}")
+        ANRequest req = AndroidNetworking.get("https://www.api-ninjas.com/api/exercises")
                 .addPathParameter("id", idNum)
                 //.addQueryParameter("apikey", API_KEY)
                 .setPriority(Priority.LOW)
