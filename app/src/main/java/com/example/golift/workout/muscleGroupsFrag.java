@@ -152,7 +152,7 @@ public class muscleGroupsFrag extends Fragment {
     // API
 
 
-    private void makeRequest(String idNum){
+    private void makeRequest(String idNum) {
         ANRequest req = AndroidNetworking.get("https://pokeapi.co/api/v2/pokemon/{id}")
                 .addPathParameter("id", idNum)
                 //.addQueryParameter("apikey", API_KEY)
@@ -163,10 +163,12 @@ public class muscleGroupsFrag extends Fragment {
             public void onResponse(JSONObject response) {
 
             }
+
             public void onError(ANError anError) {
                 Toast.makeText(getActivity(), "Error on getting data", Toast.LENGTH_LONG).show();
             }
         });
+    }
 
 
 
