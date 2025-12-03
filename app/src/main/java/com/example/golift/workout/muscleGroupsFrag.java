@@ -16,6 +16,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.ANRequest;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.golift.R;
 
 import org.json.JSONObject;
@@ -151,7 +156,7 @@ public class muscleGroupsFrag extends Fragment {
         ANRequest req = AndroidNetworking.get("https://pokeapi.co/api/v2/pokemon/{id}")
                 .addPathParameter("id", idNum)
                 //.addQueryParameter("apikey", API_KEY)
-                .setPriority(RenderScript.Priority.LOW)
+                .setPriority(Priority.LOW)
                 .build();
         req.getAsJSONObject(new JSONObjectRequestListener() {
             @Override
@@ -159,7 +164,7 @@ public class muscleGroupsFrag extends Fragment {
 
             }
             public void onError(ANError anError) {
-                Toast.makeText(getApplicationContext(), "Error on getting data", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Error on getting data", Toast.LENGTH_LONG).show();
             }
         });
 
