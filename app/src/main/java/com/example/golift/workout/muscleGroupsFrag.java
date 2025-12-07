@@ -21,74 +21,131 @@ import com.androidnetworking.common.ANRequest;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.example.golift.R;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class muscleGroupsFrag extends Fragment {
 
+    // Variables
+    String API_KEY = "9Ee9p+BL2PYmtPt/l+z/Kw==8wLM62Mk5VKuBDCc";
+    ArrayList<String> exerciseList = new ArrayList<>();
+    ArrayAdapter<String> adapter;
+
+    // XML Variables
+
+    // Biceps
     ListView lv1;
     CardView cv1;
+
+    // Back
     ListView lv2;
     CardView cv2;
+
+    // Chest
     ListView lv3;
     CardView cv3;
+
+    // Legs
     ListView lv4;
     CardView cv4;
 
+    // Shoulders
+    ListView lv5;
+    CardView cv5;
 
+    // Triceps
+    ListView lv6;
+    CardView cv6;
+
+
+    // Constructor
 
     public muscleGroupsFrag() {
         // Required empty public constructor
     }
 
 
-    // listener for when the card is clicked, to expand the listView
+    // Card Listeners
+    // Expand the card to show the listview
     View.OnClickListener cv1Listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(!(lv1.getVisibility() == VISIBLE)) {
-                lv1.setVisibility(VISIBLE);
-            } else {
-                lv1.setVisibility(GONE);
-            }
+            expandLV(lv1, "biceps");
 
         }
     };
     View.OnClickListener cv2Listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(!(lv2.getVisibility() == VISIBLE)) {
-                lv2.setVisibility(VISIBLE);
-            } else {
-                lv2.setVisibility(GONE);
-            }
+            expandLV(lv2, "lats");
 
         }
     };
     View.OnClickListener cv3Listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(!(lv3.getVisibility() == VISIBLE)) {
-                lv3.setVisibility(VISIBLE);
-            } else {
-                lv3.setVisibility(GONE);
-            }
+            expandLV(lv3, "chest");
 
         }
     };
     View.OnClickListener cv4Listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(!(lv4.getVisibility() == VISIBLE)) {
-                lv4.setVisibility(VISIBLE);
-            } else {
-                lv4.setVisibility(GONE);
-            }
+            expandLV(lv4, "hamstrings");
 
         }
     };
+    View.OnClickListener cv5Listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            expandLV(lv5, "traps");
+
+        }
+    };
+    View.OnClickListener cv6Listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            expandLV(lv6, "triceps");
+
+        }
+    };
+
+    // Helper Methods
+
+    // Expand Selected LV
+    public void expandLV(ListView LV, String muscle) {
+        closeAll();
+        if(!(LV.getVisibility() == VISIBLE)) {
+            makeRequest(muscle);
+
+            LV.setVisibility(VISIBLE);
+
+            ViewGroup.LayoutParams params = LV.getLayoutParams();
+            params.height = 1300;
+            LV.setLayoutParams(params);
+            LV.requestLayout();
+        } else {
+            LV.setVisibility(GONE);
+        }
+
+    }
+
+    // Close All LV
+    public void closeAll() {
+        lv1.setVisibility(GONE);
+        lv2.setVisibility(GONE);
+        lv3.setVisibility(GONE);
+        lv4.setVisibility(GONE);
+        lv5.setVisibility(GONE);
+        lv6.setVisibility(GONE);
+
+    }
 
 
     @Override
@@ -105,69 +162,83 @@ public class muscleGroupsFrag extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_muscle_groups, container, false);
 
-        // Listeners
+        // Finding IDs and setting listeners
         cv1 = view.findViewById(R.id.bicepsCard);
         cv1.setOnClickListener(cv1Listener);
 
         lv1 = view.findViewById(R.id.bicepLV);
+        lv1.setVisibility(GONE);
 
         cv2 = view.findViewById(R.id.backCard);
         cv2.setOnClickListener(cv2Listener);
 
         lv2 = view.findViewById(R.id.backLV);
+        lv2.setVisibility(GONE);
 
         cv3 = view.findViewById(R.id.chestCard);
         cv3.setOnClickListener(cv3Listener);
 
         lv3 = view.findViewById(R.id.chestLV);
+        lv3.setVisibility(GONE);
 
         cv4 = view.findViewById(R.id.legsCard);
         cv4.setOnClickListener(cv4Listener);
 
         lv4 = view.findViewById(R.id.legsLV);
+        lv4.setVisibility(GONE);
+
+        cv5 = view.findViewById(R.id.shouldersCard);
+        cv5.setOnClickListener(cv4Listener);
+
+        lv5 = view.findViewById(R.id.shouldersLV);
+        lv5.setVisibility(GONE);
+
+        cv6 = view.findViewById(R.id.tricepscard);
+        cv6.setOnClickListener(cv4Listener);
+
+        lv6 = view.findViewById(R.id.tricepsLV);
+        lv6.setVisibility(GONE);
 
 
 
-        // Adapters
-        /*
-        ArrayAdapter adapter1 = new ArrayAdapter(getActivity(), );
-        lv1.setAdapter(adapter1);
 
-        ArrayAdapter adapter2 = new ArrayAdapter(getActivity(), );
-        lv2.setAdapter(adapter2);
-
-        ArrayAdapter adapter3 = new ArrayAdapter(getActivity(), );
-        lv3.setAdapter(adapter3);
-
-        ArrayAdapter adapter4 = new ArrayAdapter(getActivity(), );
-        lv4.setAdapter(adapter4);
-
-         */
 
 
 
         return view;
     }
 
-    // API
 
-    // Key :
+    // key : 9Ee9p+BL2PYmtPt/l+z/Kw==8wLM62Mk5VKuBDCc
+    private void makeRequest(String muscle) {
+        ArrayList<String> list = new ArrayList<>();
 
-
-    private void makeRequest(String idNum) {
-        ANRequest req = AndroidNetworking.get("https://www.api-ninjas.com/api/exercises")
-                .addPathParameter("id", idNum)
-                //.addQueryParameter("apikey", API_KEY)
+        ANRequest req = AndroidNetworking.get("https://api.api-ninjas.com/v1/exercises")
+                .addQueryParameter("muscle", muscle)
+                .addHeaders("X-Api-Key", API_KEY)
                 .setPriority(Priority.LOW)
                 .build();
-        req.getAsJSONObject(new JSONObjectRequestListener() {
+
+
+        req.getAsObjectList(Exercise.class, new ParsedRequestListener<List<Exercise>>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(List<Exercise> exercises) {
+
+
+                exerciseList.clear();
+                for (Exercise exercise : exercises) {
+                    exerciseList.add(exercise.getName());
+                }
+
+                adapter.notifyDataSetChanged();
+
 
             }
 
+            @Override
             public void onError(ANError anError) {
-                Toast.makeText(getActivity(), "Error on getting data", Toast.LENGTH_LONG).show();
+                // handle error
+
             }
         });
     }
