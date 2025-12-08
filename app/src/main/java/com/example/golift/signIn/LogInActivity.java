@@ -2,6 +2,7 @@ package com.example.golift.signIn;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -31,25 +32,57 @@ public class LogInActivity extends AppCompatActivity {
     FirebaseDatabase database;
     FirebaseAuth auth;
 
-    OnCompleteListener<AuthResult> listener = new OnCompleteListener<>() {
+    OnCompleteListener<AuthResult> signupListener = new OnCompleteListener<AuthResult>() {
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
             if (task.isSuccessful()) {
-                DatabaseReference userReference = database.getReference("users");
-                FirebaseUser firebaseUser = auth.getCurrentUser();
-                String uid = firebaseUser.getUid();
-                User user = new User();
-                user.setPassword(passwordText.getText().toString());
-                user.setName(usernameText.getText().toString());
-                userReference.child(uid).setValue(user);
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                FirebaseUser firebaseUser = task.getResult().getUser();
+                if (firebaseUser != null) {
+                    String uid = firebaseUser.getUid();
+                    DatabaseReference userReference = database.getReference("users");
 
-                startActivity(intent);
+                    User user = new User();
+                    user.setName(usernameText.getText().toString());
+                    user.setPassword(passwordText.getText().toString());
 
+                    userReference.child(uid).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(), "Sign up successful!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Failed to save user data", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                } else {
+                    Toast.makeText(getApplicationContext(), "Sign up successful, but failed to get user.", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Exception e = task.getException();
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(), "Error user not created", Toast.LENGTH_SHORT).show();
+                String errorMsg = e != null ? e.getMessage() : "Unknown error";
+                Toast.makeText(getApplicationContext(), "Sign up failed: " + errorMsg, Toast.LENGTH_LONG).show();
+            }
+        }
+    };
+
+    OnCompleteListener<AuthResult> loginListener = new OnCompleteListener<AuthResult>() {
+        @Override
+        public void onComplete(@NonNull Task<AuthResult> task) {
+            if (task.isSuccessful()) {
+                Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            } else {
+                Exception e = task.getException();
+                String errorMsg = e != null ? e.getMessage() : "Unknown error";
+                Toast.makeText(getApplicationContext(), "Login failed: " + errorMsg, Toast.LENGTH_LONG).show();
             }
         }
     };
@@ -59,30 +92,46 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_log_in);
+
         usernameText = findViewById(R.id.user_field);
         passwordText = findViewById(R.id.pass_field);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
     }
 
     public void onSignUp(View view) {
-        String usern = usernameText.getText().toString();
-        String password = passwordText.getText().toString();
+        String usern = usernameText.getText().toString().trim();
+        String password = passwordText.getText().toString().trim();
 
-        auth.createUserWithEmailAndPassword(usern, password).addOnCompleteListener(this, listener);
+        if (TextUtils.isEmpty(usern) || TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Email and password cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        if (password.length() < 6) {
+            Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        auth.createUserWithEmailAndPassword(usern, password).addOnCompleteListener(this, signupListener);
     }
 
     public void onLogin(View view) {
-        String usern = usernameText.getText().toString();
-        String password = passwordText.getText().toString();
+        String usern = usernameText.getText().toString().trim();
+        String password = passwordText.getText().toString().trim();
 
-        auth.signInWithEmailAndPassword(usern, password).addOnCompleteListener(this, listener);
+        if (TextUtils.isEmpty(usern) || TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Email and password cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        auth.signInWithEmailAndPassword(usern, password).addOnCompleteListener(this, loginListener);
     }
 }
