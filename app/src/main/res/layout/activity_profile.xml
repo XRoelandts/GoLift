@@ -49,5 +49,11 @@
         tools:layout_editor_absoluteY="142dp"
         tools:src="@tools:sample/avatars" />
 
+    <ListView
+        android:layout_width="363dp"
+        android:layout_height="244dp"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="404dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,10 +20,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class SignInActivity extends AppCompatActivity {
+public class LogInActivity extends AppCompatActivity {
 
     EditText usernameText;
     EditText passwordText;
@@ -35,7 +36,8 @@ public class SignInActivity extends AppCompatActivity {
         public void onComplete(@NonNull Task<AuthResult> task) {
             if (task.isSuccessful()) {
                 DatabaseReference userReference = database.getReference("users");
-                String uid = userReference.push().getKey();
+                FirebaseUser firebaseUser = auth.getCurrentUser();
+                String uid = firebaseUser.getUid();
                 User user = new User();
                 user.setPassword(passwordText.getText().toString());
                 user.setName(usernameText.getText().toString());
@@ -56,7 +58,7 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.activity_log_in);
         usernameText = findViewById(R.id.user_field);
         passwordText = findViewById(R.id.pass_field);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -75,5 +77,12 @@ public class SignInActivity extends AppCompatActivity {
         auth.createUserWithEmailAndPassword(usern, password).addOnCompleteListener(this, listener);
 
 
+    }
+
+    public void onLogin(View view) {
+        String usern = usernameText.getText().toString();
+        String password = passwordText.getText().toString();
+
+        auth.signInWithEmailAndPassword(usern, password).addOnCompleteListener(this, listener);
     }
 }

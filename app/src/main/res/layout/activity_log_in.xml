@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context=".signIn.SignInActivity">
+    tools:context=".signIn.LogInActivity">
 
     <TextView
         android:id="@+id/user_label"
@@ -17,7 +17,7 @@
         android:text="@string/username"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app.layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/user_field"
@@ -81,6 +81,7 @@
         android:layout_width="153dp"
         android:layout_height="53dp"
         android:layout_marginBottom="307dp"
+        android:onClick="onSignUp"
         android:text="@string/sign_up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,6 +96,7 @@
         android:layout_marginTop="13dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="246dp"
+        android:onClick="onLogin"
         android:text="@string/log_in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
