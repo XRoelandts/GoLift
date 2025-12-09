@@ -15,6 +15,7 @@ import com.example.golift.pageButtonsFragment;
 
 public class SavedActivity extends AppCompatActivity {
 
+
     FragmentManager fg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,4 +37,5 @@ public class SavedActivity extends AppCompatActivity {
             trans.commit();
         }
     }
+
 }

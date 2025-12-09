@@ -1,21 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".saved.SavedActivity">
+    android:background="#000000">
 
+    <!-- ViewPager2 - This will hold all your saved gym cards -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerSaved"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        android:overScrollMode="never" />
+
+    <!-- Left Arrow (Previous) -->
+    <ImageButton
+        android:id="@+id/btnPrevious"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/ripple_circle"
+        android:src="@drawable/ic_arrow_left"
+        android:tint="#FFFFFF"
+        android:scaleType="centerInside"
+        android:elevation="12dp"
+        android:layout_gravity="bottom|start"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="140dp" />
+
+    <!-- Right Arrow (Next) -->
+    <ImageButton
+        android:id="@+id/btnNext"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/ripple_circle"
+        android:src="@drawable/ic_arrow_right"
+        android:tint="#FFFFFF"
+        android:scaleType="centerInside"
+        android:elevation="12dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="140dp" />
+
+    <!-- Your existing bottom navigation fragment -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/buttonFragments"
         android:name="com.example.golift.pageButtonsFragment"
-        android:layout_width="408dp"
-        android:layout_height="82dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_gravity="bottom" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
