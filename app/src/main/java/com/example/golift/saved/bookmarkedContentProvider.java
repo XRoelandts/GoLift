@@ -2,12 +2,63 @@ package com.example.golift.saved;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.util.Log;
+
+import com.example.golift.search.gymContentProvider;
 
 public class bookmarkedContentProvider extends ContentProvider {
 
-    // com.example.golift.bookmarkedContentProvider
+
+    private MainDatabaseHelper mHelper;
+
+    public final static String DBNAME = "gymDB";
+
+    public final static String TABLE_NAME = "TaskTable";
+
+
+    public static final String COL_NAME = "Name";
+    public static final String COL_DISTANCE = "Distance";
+    public static final String COL_DESCRIPTION = "Description";
+
+
+
+    private final static String SQL_CREATE_MAIN =
+            "CREATE TABLE TaskTable (" +
+                    " _id INTEGER PRIMARY KEY, " +
+                    COL_NAME + " TEXT, " +
+                    COL_DISTANCE + " INTEGER, " +
+                    COL_DESCRIPTION + " TEXT)";
+
+    public static final Uri CONTENT_URI = Uri.parse("content://com.example.golift.bookmarkedContentProvider");
+
+    protected final class MainDatabaseHelper extends SQLiteOpenHelper {
+        MainDatabaseHelper(Context context) {
+            super(context, DBNAME, null, 5);
+        }
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            db.execSQL(SQL_CREATE_MAIN);
+
+            // Verify columns
+            Cursor cursor = db.rawQuery("PRAGMA table_info(" + TABLE_NAME + ")", null);
+            while (cursor.moveToNext()) {
+                String columnName = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                Log.i("DB_SCHEMA", "Column: " + columnName);
+            }
+            cursor.close();
+
+        }
+        @Override
+        public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2){
+            arg0.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+            onCreate(arg0);
+        }
+    }
     public bookmarkedContentProvider() {
     }
 
