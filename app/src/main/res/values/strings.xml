@@ -7,6 +7,7 @@
 
 
     <!--       Sign in Strings              -->
+    <string name="profile_picture">Profile Picture</string>
     <string name="username">Username</string>
     <string name="fitness_mode_findable">Fitness Mode Findable</string>
     <string name="go_lift">Go Lift</string>
