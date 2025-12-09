@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Add internet permissions for Firebase -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,36 +15,47 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GoLift">
+
+        <!-- Workout Activity -->
         <activity
             android:name=".workout.WorkoutActivity"
             android:exported="false" />
+
+        <!-- Profile Activity -->
         <activity
             android:name=".profile.ProfileActivity"
             android:exported="false" />
+
+        <!-- Saved Activity -->
         <activity
             android:name=".saved.SavedActivity"
             android:exported="false" />
+
+        <!-- Search Activity -->
         <activity
             android:name=".search.SearchActivity"
             android:exported="false" />
+
+        <!-- SignUp Activity - LAUNCHER (first screen app opens to) -->
         <activity
             android:name=".signIn.SignUpActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- LogIn Activity - MISSING - THIS WAS THE PROBLEM! -->
+        <activity
+            android:name=".signIn.LogInActivity"
+            android:exported="false" />
+
+        <!-- Main Activity - Removed duplicate LAUNCHER intent-filter -->
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="false" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
