@@ -89,14 +89,6 @@ public class workoutsFrag extends Fragment {
         // Temp exercise array
         ArrayList<String> curExercises = new ArrayList<>();
 
-        // Populate spinner
-        makeRequest("biceps");
-        makeRequest("lats");
-        makeRequest("triceps");
-        makeRequest("back");
-        makeRequest("chest");
-        makeRequest("hamstrings");
-
         // set Adapters
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, exercisesArr);
@@ -104,6 +96,17 @@ public class workoutsFrag extends Fragment {
 
         ArrayAdapter<String> selectedLVAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, curExercises);
         selectedExLV.setAdapter(selectedLVAdapter);
+
+        // Populate spinner by making network requests.
+        // Pass the adapter to the request method so it can be updated upon completion.
+        makeRequest("biceps", spinnerAdapter);
+        makeRequest("lats", spinnerAdapter);
+        makeRequest("triceps", spinnerAdapter);
+        makeRequest("back", spinnerAdapter);
+        makeRequest("chest", spinnerAdapter);
+        makeRequest("hamstrings", spinnerAdapter);
+
+
 
         // Spinner listener
         exerciseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -192,7 +195,7 @@ public class workoutsFrag extends Fragment {
 
     }
 
-    private void makeRequest(String muscle) {
+    private void makeRequest(String muscle, ArrayAdapter<String> adapter) {
         ArrayList<String> list = new ArrayList<>();
 
         ANRequest req = AndroidNetworking.get("https://api.api-ninjas.com/v1/exercises")
@@ -206,9 +209,22 @@ public class workoutsFrag extends Fragment {
             @Override
             public void onResponse(List<Exercise> exercises) {
 
+                // Ensure the fragment is still attached to an activity
+                if (getActivity() == null) {
+                    return; // Stop if the context is gone
+                }
+
                 for (Exercise exercise : exercises) {
                     exercisesArr.add(exercise.getName());
                 }
+
+                // Notify the adapter on the main UI thread that the data has changed
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
 
             }
 
