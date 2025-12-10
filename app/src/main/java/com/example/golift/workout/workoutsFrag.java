@@ -83,7 +83,7 @@ public class workoutsFrag extends Fragment {
         View view = getLayoutInflater().inflate(R.layout.dialog_create_workout, null);
 
         // Ids
-        ListView selectedExLV = view.findViewById(R.id.exerciseLV);
+        ListView selectedExLV = view.findViewById(R.id.exercisesLV);
         EditText workoutTitle = view.findViewById(R.id.workoutNameET);
         Spinner exerciseSpinner = view.findViewById(R.id.workoutSpinner);
 
