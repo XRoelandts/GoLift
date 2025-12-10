@@ -88,6 +88,7 @@ public class workoutsFrag extends Fragment {
 
         // Temp exercise array
         ArrayList<String> curExercises = new ArrayList<>();
+        curExercises.add("");
 
         // set Adapters
 
