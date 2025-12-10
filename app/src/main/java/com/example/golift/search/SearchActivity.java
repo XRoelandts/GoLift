@@ -131,20 +131,39 @@ public class SearchActivity extends AppCompatActivity {
 
         data.moveToPosition(position);
 
+        // Check if something is already bookmarked
+        Boolean go = true;
 
-        ContentValues values = new ContentValues();
-        values.put(bookmarkedContentProvider.COL_NAME, data.getString(data.getColumnIndex("Name")));
-        values.put(bookmarkedContentProvider.COL_DISTANCE, data.getString(data.getColumnIndex("Distance")));
-        values.put(bookmarkedContentProvider.COL_DESCRIPTION, data.getString(data.getColumnIndex("Description")));
-
-        // Use the ContentResolver to add the row.
-        getContentResolver().insert(bookmarkUri, values);
-
-        for(int i = 0; i < data1.getCount(); i++)
-        {
-            data1.moveToPosition(i);
-            Log.i("BookmarkDB", data1.getString(data.getColumnIndex("Name")));
+        if(data1 != null) {
+            for (int i = 0; i < data1.getCount(); i++) {
+                data1.moveToPosition(i);
+                if (gymName.equals(data1.getString(data.getColumnIndex("Name")))) {
+                    go = false;
+                }
+            }
         }
+
+        if(go) {
+            ContentValues values = new ContentValues();
+            values.put(bookmarkedContentProvider.COL_NAME, data.getString(data.getColumnIndex("Name")));
+            values.put(bookmarkedContentProvider.COL_DISTANCE, data.getString(data.getColumnIndex("Distance")));
+            values.put(bookmarkedContentProvider.COL_DESCRIPTION, data.getString(data.getColumnIndex("Description")));
+
+            // Use the ContentResolver to add the row.
+            getContentResolver().insert(bookmarkUri, values);
+
+            for(int i = 0; i < data1.getCount(); i++)
+            {
+                data1.moveToPosition(i);
+                Log.i("BookmarkDB", data1.getString(data.getColumnIndex("Name")));
+            }
+        } else {
+            Toast.makeText(SearchActivity.this, "Gym already bookmarked", Toast.LENGTH_SHORT).show();
+        }
+
+
+
+
 
 
     }
