@@ -5,13 +5,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
@@ -21,29 +20,25 @@ import com.example.golift.R;
 import com.example.golift.pageButtonsFragment;
 import com.example.golift.saved.bookmarkedContentProvider;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements OnBookmarkButtonClickListener {
 
     FragmentManager fg;
-
     gymContentProvider gymProvider;
-    SimpleCursorAdapter adapter;
-
     bookmarkedContentProvider bookmarkProvider;
-
     Uri uri = gymContentProvider.CONTENT_URI;
 
     SearchView search;
     ListView gymView;
 
+    gymsViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_search);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            // ... your insets code ...
             return insets;
         });
 
@@ -52,71 +47,50 @@ public class SearchActivity extends AppCompatActivity {
             FragmentTransaction trans = fg.beginTransaction();
             pageButtonsFragment pageButtons = new pageButtonsFragment();
             trans.add(R.id.buttonFragments, pageButtons, "buttonsFrag");
-
             trans.commit();
         }
 
-        // Provider setup
         gymProvider = new gymContentProvider();
-
-        populateContent();
-
+        populateContent(); // Your method is called here
         bookmarkProvider = new bookmarkedContentProvider();
 
-        // Search setup
         search = findViewById(R.id.gymSearch);
-        search.clearFocus();
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // --- THIS IS THE NEW FILTERING LOGIC ---
-
-                // Define the selection criteria. The '?' is a placeholder.
-                // "LIKE ?" with "%" wildcards performs a "contains" search.
-                String selection = gymContentProvider.COL_NAME + " LIKE ?";
-                String[] selectionArgs = new String[]{"%" + newText + "%"};
-
-                // Re-query the ContentProvider with the new filter.
-                Cursor filteredCursor = getContentResolver().query(uri, null, selection, selectionArgs, null);
-
-                // Tell the adapter to use the new, filtered cursor.
-                // The adapter will automatically update the ListView.
-                adapter.changeCursor(filteredCursor);
-
-                return true; // We've handled the event
-            }
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                return false;
-            }
-        });
-
-        // List View setup
 
         gymView = findViewById(R.id.gymLV);
+        Cursor data = getContentResolver().query(uri, null, null, null, null);
 
-        Cursor data = getContentResolver().query(uri, null, null, null, null, null);
+        String[] mListColumns = new String[]{gymContentProvider.COL_NAME, gymContentProvider.COL_DISTANCE};
+        int[] mListItems = new int[]{R.id.gymNameTV, R.id.gymDistTV};
 
-        if(data != null) {
-            data.moveToFirst();
-            Log.i("data test", data.getString(data.getColumnIndex("Name")));
-        }
-
-        String[] mListColumns = new String[] { gymContentProvider.COL_NAME, gymContentProvider.COL_DISTANCE};
-        int[] mListItems = new int[] { R.id.gymNameTV, R.id.gymDistTV };
-
-        adapter = new SimpleCursorAdapter(getApplicationContext(), R.layout.workoutscard, data, mListColumns, mListItems );
+        adapter = new gymsViewAdapter(this, R.layout.workoutscard, data, mListColumns, mListItems, 0, this);
 
         gymView.setAdapter(adapter);
     }
 
-    public void bookmarkGym(int position) {
+    @Override
+    public void onBookmarkClick(Cursor cursor) {
+        if (cursor == null) {
+            return;
+        }
+        try {
+            String gymName = cursor.getString(cursor.getColumnIndexOrThrow(gymContentProvider.COL_NAME));
+            String gymDist = cursor.getString(cursor.getColumnIndexOrThrow(gymContentProvider.COL_DISTANCE));
 
+            Toast.makeText(this, "Bookmarked: " + gymName, Toast.LENGTH_SHORT).show();
+
+            ContentValues values = new ContentValues();
+            values.put(bookmarkedContentProvider.COL_NAME, gymName);
+            values.put(bookmarkedContentProvider.COL_DISTANCE, gymDist);
+
+            getContentResolver().insert(bookmarkedContentProvider.CONTENT_URI, values);
+
+        } catch (IllegalArgumentException e) {
+            Log.e("SearchActivity", "Error getting column from cursor: " + e.getMessage());
+        }
     }
 
-    public void populateContent() {
+
+public void populateContent() {
         Cursor data = getContentResolver().query(uri, null, null, null, null, null);
         if(data.getCount() == 0) {
             ContentValues values = new ContentValues();
