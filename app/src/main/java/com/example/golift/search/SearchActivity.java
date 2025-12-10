@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.golift.R;
 import com.example.golift.pageButtonsFragment;
+import com.example.golift.saved.bookmarkedContentProvider;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -26,6 +27,8 @@ public class SearchActivity extends AppCompatActivity {
 
     gymContentProvider gymProvider;
     SimpleCursorAdapter adapter;
+
+    bookmarkedContentProvider bookmarkProvider;
 
     Uri uri = gymContentProvider.CONTENT_URI;
 
@@ -55,9 +58,12 @@ public class SearchActivity extends AppCompatActivity {
 
         // Provider setup
         gymProvider = new gymContentProvider();
+
         populateContent();
 
+        bookmarkProvider = new bookmarkedContentProvider();
 
+        // Search setup
         search = findViewById(R.id.gymSearch);
         search.clearFocus();
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -87,6 +93,8 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        // List View setup
+
         gymView = findViewById(R.id.gymLV);
 
         Cursor data = getContentResolver().query(uri, null, null, null, null, null);
@@ -102,6 +110,10 @@ public class SearchActivity extends AppCompatActivity {
         adapter = new SimpleCursorAdapter(getApplicationContext(), R.layout.workoutscard, data, mListColumns, mListItems );
 
         gymView.setAdapter(adapter);
+    }
+
+    public void bookmarkGym(int position) {
+
     }
 
     public void populateContent() {

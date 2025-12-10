@@ -65,7 +65,9 @@ public class bookmarkedContentProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         // Implement this to handle requests to delete one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+        return mHelper.getWritableDatabase().
+                delete(TABLE_NAME, selection,
+                        selectionArgs);
     }
 
     @Override
@@ -78,26 +80,36 @@ public class bookmarkedContentProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         // TODO: Implement this to handle requests to insert a new row.
-        throw new UnsupportedOperationException("Not yet implemented");
+        String Name = values.getAsString(COL_NAME);
+        String Distance = values.getAsString(COL_DISTANCE);
+        String Description = values.getAsString(COL_DESCRIPTION);
+
+
+        long id = mHelper.getWritableDatabase().insert(TABLE_NAME, null, values);
+
+        return Uri.withAppendedPath(CONTENT_URI, "" + id);
     }
 
     @Override
     public boolean onCreate() {
         // TODO: Implement this to initialize your content provider on startup.
-        return false;
+        mHelper = new MainDatabaseHelper(getContext());
+        return true;
     }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         // TODO: Implement this to handle query requests from clients.
-        throw new UnsupportedOperationException("Not yet implemented");
+        return mHelper.getReadableDatabase().query(TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
         // TODO: Implement this to handle requests to update one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+        return mHelper.getWritableDatabase().
+                update(TABLE_NAME, values, selection,
+                        selectionArgs);
     }
 }

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/black">
 
     <TextView
         android:id="@+id/newWorkoutHeader"
@@ -13,7 +14,8 @@
         android:layout_marginTop="16dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"/>
 
     <EditText
         android:id="@+id/workoutNameET"
@@ -25,7 +27,8 @@
         android:inputType="text"
         android:text="Name"
         app:layout_constraintStart_toEndOf="@+id/workoutNameTV"
-        app:layout_constraintTop_toBottomOf="@+id/newWorkoutHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/newWorkoutHeader"
+        android:textColor="@color/white"/>
 
     <ListView
         android:id="@+id/exercisesLV"
@@ -50,5 +53,6 @@
         android:layout_marginTop="67dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
