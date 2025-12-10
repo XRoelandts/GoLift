@@ -13,41 +13,40 @@
 
         <Button
             android:id="@+id/workoutsB"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="45dp"
-            android:layout_marginTop="34dp"
-            android:text="Button"
+            android:layout_width="81dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="32dp"
+            android:text="Workouts"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/searchB"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="17dp"
+            android:layout_width="92dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="34dp"
-            android:text="Button"
+            android:text="Search"
             app:layout_constraintStart_toEndOf="@+id/workoutsB"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/homeB"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="23dp"
+            android:layout_width="86dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="34dp"
-            android:text="Button"
+            android:text="Home"
             app:layout_constraintStart_toEndOf="@+id/searchB"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/savedB"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="25dp"
+            android:layout_width="87dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="34dp"
-            android:text="Button"
+            android:text="Saved"
             app:layout_constraintStart_toEndOf="@+id/homeB"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,9 +54,9 @@
             android:id="@+id/profileB"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="34dp"
-            android:text="Button"
+            android:text="Profile"
             app:layout_constraintStart_toEndOf="@+id/savedB"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -88,7 +88,8 @@ public class workoutsFrag extends Fragment {
 
         // Temp exercise array
         ArrayList<String> curExercises = new ArrayList<>();
-        curExercises.add("");
+
+        exercisesArr.clear();
 
         // set Adapters
 
@@ -115,8 +116,11 @@ public class workoutsFrag extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 // adds selected exercise to list
-               curExercises.add(exercisesArr.get(position).toString());
-               selectedLVAdapter.notifyDataSetChanged();
+                if (!exercisesArr.isEmpty() && position < exercisesArr.size()) {
+                    // adds selected exercise to list
+                    curExercises.add(exercisesArr.get(position)); // .toString() is redundant here
+                    selectedLVAdapter.notifyDataSetChanged();
+                }
 
             }
 
