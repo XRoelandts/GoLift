@@ -1,12 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App Name -->
     <string name="app_name">GoLift</string>
+
+    <!-- Strings for Fragments/Placeholders -->
     <string name="noodle">noodle</string>
     <string name="textview">TextView</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-
-    <!--       Sign in Strings              -->
+    <!-- Sign in / Sign Up Page Strings -->
     <string name="profile_picture">Profile Picture</string>
     <string name="username">Username</string>
     <string name="fitness_mode_findable">Fitness Mode Findable</string>
@@ -18,20 +20,15 @@
     <string name="log_in">Log in</string>
     <string name="forgot_password">Forgot Password</string>
 
-    <!--       Workout page Strings              -->
-    <string name="workoutHeader">Workouts</string>
+    <!-- Profile Activity Strings -->
+    <string name="profile_tap_to_set_name">Tap to set name</string>
 
+    <!-- Workout Page Strings -->
+    <string name="workoutHeader">Workouts</string>
     <string name="bicepHeader">Biceps</string>
     <string name="tricepHeader">Triceps</string>
     <string name="backHeader">Back</string>
     <string name="chestHeader">Chest</string>
     <string name="legsHeader">Legs</string>
     <string name="shoulderHeader">Shoulders</string>
-
-
-
-    <!--       Home Page Strings              -->
-
-
-    <!--       Search Strings              -->
 </resources>
