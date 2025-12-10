@@ -171,4 +171,12 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <!-- Fragment Container for Bottom Navigation Buttons - ADD THIS! -->
+    <FrameLayout
+        android:id="@+id/buttonFragments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

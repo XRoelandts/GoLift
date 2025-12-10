@@ -34,11 +34,11 @@ import java.util.List;
 
 public class workoutsFrag extends Fragment {
 
-   Button newWork;
+    Button newWork;
 
     ArrayList<String> exercisesArr = new ArrayList();
 
-   LinearLayout LL;
+    LinearLayout LL;
 
     String API_KEY = "9Ee9p+BL2PYmtPt/l+z/Kw==8wLM62Mk5VKuBDCc";
 
@@ -78,7 +78,8 @@ public class workoutsFrag extends Fragment {
 
     private void buildDialog() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        // FIX: Used requireActivity() for a non-null context
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         View view = getLayoutInflater().inflate(R.layout.dialog_create_workout, null);
 
         // Ids
@@ -92,12 +93,13 @@ public class workoutsFrag extends Fragment {
         exercisesArr.clear();
 
         // set Adapters
-
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, exercisesArr);
+        // FIX: Used requireActivity() for a non-null context
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, exercisesArr);
         exerciseSpinner.setAdapter(spinnerAdapter);
 
-        ArrayAdapter<String> selectedLVAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, curExercises);
-        selectedExLV.setAdapter(selectedLVAdapter);
+        // FIX: Used requireActivity() for a non-null context
+        ArrayAdapter<String> selectedLVAdapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1, curExercises);
+        selectedExLV.setAdapter(selectedLVAdapter); // This line is now safe
 
         // Populate spinner by making network requests.
         // Pass the adapter to the request method so it can be updated upon completion.
@@ -173,7 +175,8 @@ public class workoutsFrag extends Fragment {
         title.setText(name);
 
         ListView exerciseLV = view.findViewById(R.id.exerciseLV);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, exercises);
+        // FIX: Used requireActivity() for a non-null context
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_list_item_1, exercises);
         exerciseLV.setAdapter(adapter);
 
         title.setOnClickListener(new View.OnClickListener() {
