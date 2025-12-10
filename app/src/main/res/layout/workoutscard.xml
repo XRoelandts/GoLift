@@ -20,7 +20,7 @@
 
             <TextView
                 android:id="@+id/gymNameTV"
-                android:layout_width="wrap_content"
+                android:layout_width="151dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView"
@@ -28,7 +28,7 @@
 
             <TextView
                 android:id="@+id/gymDistTV"
-                android:layout_width="wrap_content"
+                android:layout_width="132dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView"
@@ -36,8 +36,8 @@
 
             <ImageButton
                 android:id="@+id/bookmarkButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="112dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_arrow_right" />
 

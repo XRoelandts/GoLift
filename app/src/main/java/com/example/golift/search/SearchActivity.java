@@ -87,7 +87,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 // Tell the adapter to use the new, filtered cursor.
                 // The adapter will automatically update the ListView.
-                adapter.changeCursor(filteredCursor);
+                adapter1.changeCursor(filteredCursor);
 
                 return true; // We've handled the event
             }
