@@ -159,6 +159,7 @@ public class workoutsFrag extends Fragment {
             }
         });
 
+        builder.setView(view);
         AlertDialog dialog = builder.create();
 
         dialog.show();
