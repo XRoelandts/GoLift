@@ -33,7 +33,7 @@ import java.util.List;
 public class muscleGroupsFrag extends Fragment {
 
     // Variables
-    String API_KEY = "9Ee9p+BL2PYmtPt/l+z/Kw==8wLM62Mk5VKuBDCc";
+    String API_KEY = "";
     ArrayList<String> exerciseList = new ArrayList<>();
     ArrayAdapter<String> adapter;
 
