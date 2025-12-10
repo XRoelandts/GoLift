@@ -97,8 +97,13 @@ public class workoutsFrag extends Fragment {
         makeRequest("chest");
         makeRequest("hamstrings");
 
+        // set Adapters
+
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, exercisesArr);
         exerciseSpinner.setAdapter(spinnerAdapter);
+
+        ArrayAdapter<String> selectedLVAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, curExercises);
+        selectedExLV.setAdapter(selectedLVAdapter);
 
         // Spinner listener
         exerciseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -107,6 +112,8 @@ public class workoutsFrag extends Fragment {
 
                 // adds selected exercise to list
                curExercises.add(exercisesArr.get(position).toString());
+               selectedLVAdapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -122,8 +129,10 @@ public class workoutsFrag extends Fragment {
 
                 // Removes the selected exercise from the list
                 curExercises.remove(position);
+                selectedLVAdapter.notifyDataSetChanged();
             }
         });
+
 
         // Submit Button
         builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
