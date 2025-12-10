@@ -14,17 +14,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
-        android:padding="32dp"
-        android:gravity="center">
+        android:padding="32dp">
 
         <!-- Gym Icon -->
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:contentDescription="Gym Icon"
             android:src="@drawable/ic_gym"
-            android:tint="@color/white"
-            android:contentDescription="Gym Icon" />
+            app:tint="@color/white" />
 
         <!-- Gym Name -->
         <TextView
@@ -32,26 +32,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:gravity="center"
             android:text="Gym Name"
             android:textColor="@color/white"
             android:textSize="32sp"
-            android:textStyle="bold"
-            android:gravity="center" />
+            android:textStyle="bold" />
 
         <!-- Distance -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:contentDescription="Location"
                 android:src="@drawable/ic_location"
-                android:tint="@color/white"
-                android:contentDescription="Location" />
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/tvGymDistance"
@@ -69,12 +69,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:alpha="0.9"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
             android:text="Description of the gym goes here"
             android:textColor="@color/white"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:alpha="0.9"
-            android:lineSpacingExtra="4dp" />
+            android:textSize="16sp" />
 
         <!-- Remove Button -->
         <com.google.android.material.button.MaterialButton
@@ -82,12 +82,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
             android:text="Remove from Saved"
             android:textColor="@color/orange"
             app:backgroundTint="@color/white"
-            app:cornerRadius="20dp"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="12dp" />
+            app:cornerRadius="20dp" />
 
     </LinearLayout>
 

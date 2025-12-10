@@ -19,6 +19,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.golift.R;
 import com.example.golift.model.Gym;
 import com.example.golift.pageButtonsFragment;
+import com.example.golift.search.gymContentProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,8 +114,8 @@ public class SavedActivity extends AppCompatActivity implements SavedGymsAdapter
     private void loadSavedGyms() {
         savedGyms = new ArrayList<>();
 
-        // Query the bookmarked content provider
-        Cursor cursor = getContentResolver().query(
+        // Step 1: Get all bookmarked gym IDs
+        Cursor bookmarkCursor = getContentResolver().query(
                 bookmarkedContentProvider.CONTENT_URI,
                 null,
                 null,
@@ -122,24 +123,45 @@ public class SavedActivity extends AppCompatActivity implements SavedGymsAdapter
                 null
         );
 
-        if (cursor != null) {
+        if (bookmarkCursor != null) {
             try {
-                int nameIndex = cursor.getColumnIndex(bookmarkedContentProvider.COL_NAME);
-                int distanceIndex = cursor.getColumnIndex(bookmarkedContentProvider.COL_DISTANCE);
-                int descriptionIndex = cursor.getColumnIndex(bookmarkedContentProvider.COL_DESCRIPTION);
-                int idIndex = cursor.getColumnIndex("_id");
+                int gymIdIndex = bookmarkCursor.getColumnIndex(bookmarkedContentProvider.COL_GYM_ID);
 
-                while (cursor.moveToNext()) {
-                    long id = cursor.getLong(idIndex);
-                    String name = cursor.getString(nameIndex);
-                    int distance = cursor.getInt(distanceIndex);
-                    String description = cursor.getString(descriptionIndex);
+                while (bookmarkCursor.moveToNext()) {
+                    long gymId = bookmarkCursor.getLong(gymIdIndex);
 
-                    Gym gym = new Gym(id, name, distance, description);
-                    savedGyms.add(gym);
+                    // Step 2: Get full gym details from gymContentProvider
+                    Cursor gymCursor = getContentResolver().query(
+                            gymContentProvider.CONTENT_URI,
+                            null,
+                            "_id = ?",
+                            new String[]{String.valueOf(gymId)},
+                            null
+                    );
+
+                    if (gymCursor != null) {
+                        try {
+                            if (gymCursor.moveToFirst()) {
+                                int nameIndex = gymCursor.getColumnIndex(gymContentProvider.COL_NAME);
+                                int distanceIndex = gymCursor.getColumnIndex(gymContentProvider.COL_DISTANCE);
+                                int descriptionIndex = gymCursor.getColumnIndex(gymContentProvider.COL_DESCRIPTION);
+                                int idIndex = gymCursor.getColumnIndex("_id");
+
+                                long id = gymCursor.getLong(idIndex);
+                                String name = gymCursor.getString(nameIndex);
+                                int distance = gymCursor.getInt(distanceIndex);
+                                String description = gymCursor.getString(descriptionIndex);
+
+                                Gym gym = new Gym(id, name, distance, description);
+                                savedGyms.add(gym);
+                            }
+                        } finally {
+                            gymCursor.close();
+                        }
+                    }
                 }
             } finally {
-                cursor.close();
+                bookmarkCursor.close();
             }
         }
 
@@ -168,10 +190,10 @@ public class SavedActivity extends AppCompatActivity implements SavedGymsAdapter
 
     @Override
     public void onRemoveGym(Gym gym, int position) {
-        // Delete from database
+        // Delete ONLY from bookmarks table (gym still exists in gymContentProvider)
         int deletedRows = getContentResolver().delete(
                 bookmarkedContentProvider.CONTENT_URI,
-                "_id = ?",
+                bookmarkedContentProvider.COL_GYM_ID + " = ?",
                 new String[]{String.valueOf(gym.getId())}
         );
 
@@ -180,7 +202,7 @@ public class SavedActivity extends AppCompatActivity implements SavedGymsAdapter
             adapter.removeGym(position);
             savedGyms.remove(position);
 
-            Toast.makeText(this, "Gym removed from saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Gym removed from saved (still in search)", Toast.LENGTH_SHORT).show();
 
             // Update arrow buttons after removal
             int newPosition = Math.min(position, adapter.getItemCount() - 1);
