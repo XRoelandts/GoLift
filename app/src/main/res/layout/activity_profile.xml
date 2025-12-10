@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,7 +9,6 @@
     android:background="@color/grey"
     tools:context=".profile.ProfileActivity">
 
-    <!-- Toolbar with back arrow -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -22,15 +22,15 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:paddingTop="56dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="56dp">
+            android:orientation="vertical">
 
-            <!-- Orange gradient header card -->
+            <!-- Orange Header Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,29 +44,38 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:orientation="vertical"
+                    android:gravity="center"
                     android:padding="32dp">
 
-                    <!-- Avatar with circular border -->
+                    <!-- Profile Image + Camera Button -->
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:id="@+id/imageView2"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/profileImage"
+                            android:layout_width="130dp"
+                            android:layout_height="130dp"
                             android:src="@drawable/ic_profile_placeholder"
-                            android:background="@drawable/circle_background"
-                            android:scaleType="centerCrop"
-                            android:clipToOutline="true"
-                            android:contentDescription="@string/profile_picture" />
+                            app:civ_border_width="4dp"
+                            app:civ_border_color="@color/white"
+                            android:scaleType="centerCrop" />
+
+                        <ImageButton
+                            android:id="@+id/btnChangePhoto"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="bottom|end"
+                            android:background="@drawable/circle_white"
+                            android:src="@android:drawable/ic_menu_camera"
+                            android:contentDescription="Change photo"
+                            android:visibility="gone"
+                            app:tint="@color/orange" />
                     </FrameLayout>
 
-                    <!-- Name -->
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/tvName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
@@ -75,18 +84,36 @@
                         android:textSize="28sp"
                         android:textStyle="bold" />
 
-                    <!-- Current streak -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilName"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="12dp"
+                        android:hint="Your name"
+                        app:boxStrokeColor="@color/white"
+                        app:hintTextColor="@color/white"
+                        android:visibility="gone">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <TextView
                         android:id="@+id/tvCurrentStreak"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="12dp"
                         android:text="5 × Streak"
                         android:textColor="@color/white"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
-                    <!-- Highest streak subtitle -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -96,68 +123,49 @@
                         android:alpha="0.8"
                         android:textSize="16sp" />
 
+                    <LinearLayout
+                        android:id="@+id/layoutEditButtons"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <Button
+                            android:id="@+id/btnCancel"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cancel"
+                            android:textColor="@color/white" />
+
+                        <Button
+                            android:id="@+id/btnSave"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:backgroundTint="@color/white"
+                            android:text="Save"
+                            android:textColor="@color/orange" />
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Menu items container -->
+            <!-- Menu Items (your existing ones) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:background="@drawable/menu_background"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/itemSettings"
-                    style="@style/ProfileMenuItem"
-                    android:text="Settings"
-                    app:drawableStartCompat="@drawable/ic_settings_24" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#33FFFFFF"
-                    android:layout_marginStart="72dp" />
-
-                <TextView
-                    android:id="@+id/itemRetakeSurvey"
-                    style="@style/ProfileMenuItem"
-                    android:text="Re-take Survey"
-                    app:drawableStartCompat="@drawable/ic_survey_24" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#33FFFFFF"
-                    android:layout_marginStart="72dp" />
-
-                <TextView
-                    android:id="@+id/itemChangeGoal"
-                    style="@style/ProfileMenuItem"
-                    android:text="Change Streak Goal"
-                    app:drawableStartCompat="@drawable/ic_flame_24" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#33FFFFFF"
-                    android:layout_marginStart="72dp" />
-
-                <TextView
-                    android:id="@+id/itemChangeColor"
-                    style="@style/ProfileMenuItem"
-                    android:text="Change Color Scheme"
-                    app:drawableStartCompat="@drawable/ic_palette_24" />
-
+                <!-- ... keep your menu items exactly as they were ... -->
             </LinearLayout>
 
-            <!-- Log Out button -->
             <TextView
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_margin="24dp"
                 android:layout_marginBottom="40dp"
                 android:gravity="center"
                 android:padding="18dp"
@@ -169,10 +177,53 @@
                 android:clickable="true"
                 android:focusable="true" />
 
+
+            <TextView
+                android:id="@+id/itemSettings"
+                style="@style/ProfileMenuItem"
+                android:text="Settings"
+                app:drawableStartCompat="@drawable/ic_settings_24" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#33FFFFFF"
+                android:layout_marginStart="72dp" />
+
+            <TextView
+                android:id="@+id/itemRetakeSurvey"
+                style="@style/ProfileMenuItem"
+                android:text="Re-take Survey"
+                app:drawableStartCompat="@drawable/ic_survey_24" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#33FFFFFF"
+                android:layout_marginStart="72dp" />
+
+            <TextView
+                android:id="@+id/itemChangeGoal"
+                style="@style/ProfileMenuItem"
+                android:text="Change Streak Goal"
+                app:drawableStartCompat="@drawable/ic_flame_24" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#33FFFFFF"
+                android:layout_marginStart="72dp" />
+
+            <TextView
+                android:id="@+id/itemChangeColor"
+                style="@style/ProfileMenuItem"
+                android:text="Change Color Scheme"
+                app:drawableStartCompat="@drawable/ic_palette_24" />
+
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Fragment Container for Bottom Navigation Buttons - ADD THIS! -->
     <FrameLayout
         android:id="@+id/buttonFragments"
         android:layout_width="match_parent"

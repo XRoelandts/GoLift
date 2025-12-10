@@ -16,6 +16,7 @@ firebaseDatabase = "22.0.1"
 cardview = "1.0.0"
 recyclerview = "1.4.0"
 viewpager2 = "1.1.0"
+firebaseStorage = "22.0.1"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -33,6 +34,7 @@ firebase-database = { group = "com.google.firebase", name = "firebase-database",
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

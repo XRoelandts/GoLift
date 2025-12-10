@@ -5,8 +5,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
@@ -22,25 +20,22 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.golift.R;
 import com.example.golift.pageButtonsFragment;
+import com.example.golift.saved.BookmarkHelper;
 import com.example.golift.saved.bookmarkedContentProvider;
 
 public class SearchActivity extends AppCompatActivity {
 
     FragmentManager fg;
-
     gymContentProvider gymProvider;
     SimpleCursorAdapter adapter;
     gymsViewAdapter adapter1;
-
     bookmarkedContentProvider bookmarkProvider;
 
     Uri uri = gymContentProvider.CONTENT_URI;
-
-    Uri bookmarkUri = bookmarkProvider.CONTENT_URI;
+    Uri bookmarkUri = bookmarkedContentProvider.CONTENT_URI;
 
     SearchView search;
     ListView gymView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +53,15 @@ public class SearchActivity extends AppCompatActivity {
             FragmentTransaction trans = fg.beginTransaction();
             pageButtonsFragment pageButtons = new pageButtonsFragment();
             trans.add(R.id.buttonFragments, pageButtons, "buttonsFrag");
-
             trans.commit();
         }
 
         // Provider setup
         gymProvider = new gymContentProvider();
-
-        populateContent();
-
         bookmarkProvider = new bookmarkedContentProvider();
+
+        // Populate gyms if database is empty
+        populateContent();
 
         // Search setup
         search = findViewById(R.id.gymSearch);
@@ -75,165 +69,195 @@ public class SearchActivity extends AppCompatActivity {
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextChange(String newText) {
-                // --- THIS IS THE NEW FILTERING LOGIC ---
-
-                // Define the selection criteria. The '?' is a placeholder.
-                // "LIKE ?" with "%" wildcards performs a "contains" search.
+                // Filter gyms by name
                 String selection = gymContentProvider.COL_NAME + " LIKE ?";
                 String[] selectionArgs = new String[]{"%" + newText + "%"};
 
-                // Re-query the ContentProvider with the new filter.
                 Cursor filteredCursor = getContentResolver().query(uri, null, selection, selectionArgs, null);
-
-                // Tell the adapter to use the new, filtered cursor.
-                // The adapter will automatically update the ListView.
                 adapter1.changeCursor(filteredCursor);
 
-                return true; // We've handled the event
+                return true;
             }
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 return false;
             }
         });
 
         // List View setup
-
         gymView = findViewById(R.id.gymLV);
 
         Cursor data = getContentResolver().query(uri, null, null, null, null, null);
 
-        if(data != null) {
+        if(data != null && data.getCount() > 0) {
             data.moveToFirst();
-            Log.i("data test", data.getString(data.getColumnIndex("Name")));
+            Log.i("data test", data.getString(data.getColumnIndexOrThrow(gymContentProvider.COL_NAME)));
         }
 
-        String[] mListColumns = new String[] { gymContentProvider.COL_NAME, gymContentProvider.COL_DISTANCE};
-        int[] mListItems = new int[] { R.id.gymNameTV, R.id.gymDistTV };
+        String[] mListColumns = new String[] {
+                gymContentProvider.COL_NAME,
+                gymContentProvider.COL_DISTANCE
+        };
+        int[] mListItems = new int[] {
+                R.id.gymNameTV,
+                R.id.gymDistTV
+        };
 
-        adapter = new SimpleCursorAdapter(getApplicationContext(), R.layout.workoutscard, data, mListColumns, mListItems );
+        adapter = new SimpleCursorAdapter(getApplicationContext(), R.layout.workoutscard, data, mListColumns, mListItems);
         adapter1 = new gymsViewAdapter(SearchActivity.this, R.layout.workoutscard, data, mListColumns, mListItems);
 
         gymView.setAdapter(adapter1);
     }
 
-    public void bookmarkGym(String gymName, int position) {
+    /**
+     * Bookmark a gym by storing only its ID reference
+     * @param gymId The ID of the gym from the cursor
+     * @param position Position in the list (optional, for logging)
+     */
+    public void bookmarkGym(long gymId, int position) {
+        Log.i("bookmark", "Attempting to bookmark gym ID: " + gymId);
 
-        Log.i("bookmark", "check");
+        // Use BookmarkHelper to add bookmark
+        boolean success = BookmarkHelper.addBookmark(this, gymId);
 
-        Cursor data = getContentResolver().query(uri, null, null,
-                null, null, null);
-
-        Cursor data1 = getContentResolver().query(bookmarkUri, null, null,
-                null, null, null);
-
-        data.moveToPosition(position);
-
-        // Check if something is already bookmarked
-        Boolean go = true;
-
-        if(data1 != null) {
-            for (int i = 0; i < data1.getCount(); i++) {
-                data1.moveToPosition(i);
-                if (gymName.equals(data1.getString(data.getColumnIndex("Name")))) {
-                    go = false;
-                }
-            }
+        if (success) {
+            // Refresh the adapter to update bookmark button states
+            adapter1.notifyDataSetChanged();
+            Log.i("bookmark", "Successfully bookmarked gym ID: " + gymId);
         }
-
-        if(go) {
-            ContentValues values = new ContentValues();
-            values.put(bookmarkedContentProvider.COL_NAME, data.getString(data.getColumnIndex("Name")));
-            values.put(bookmarkedContentProvider.COL_DISTANCE, data.getString(data.getColumnIndex("Distance")));
-            values.put(bookmarkedContentProvider.COL_DESCRIPTION, data.getString(data.getColumnIndex("Description")));
-
-            // Use the ContentResolver to add the row.
-            getContentResolver().insert(bookmarkUri, values);
-
-            for(int i = 0; i < data1.getCount(); i++)
-            {
-                data1.moveToPosition(i);
-                Log.i("BookmarkDB", data1.getString(data.getColumnIndex("Name")));
-            }
-        } else {
-            Toast.makeText(SearchActivity.this, "Gym already bookmarked", Toast.LENGTH_SHORT).show();
-        }
-
-
-
-
-
-
     }
 
+    /**
+     * Alternative method if you only have the gym name and need to find the ID
+     * @param gymName Name of the gym
+     * @param position Position in the cursor
+     */
+    public void bookmarkGymByName(String gymName, int position) {
+        Log.i("bookmark", "Bookmarking gym: " + gymName);
 
+        // Query to find the gym by name and get its ID
+        Cursor data = getContentResolver().query(
+                uri,
+                new String[]{"_id", gymContentProvider.COL_NAME},
+                gymContentProvider.COL_NAME + " = ?",
+                new String[]{gymName},
+                null
+        );
+
+        if (data != null && data.moveToFirst()) {
+            int idIndex = data.getColumnIndexOrThrow("_id");
+            long gymId = data.getLong(idIndex);
+            data.close();
+
+            // Now bookmark using the gym ID
+            bookmarkGym(gymId, position);
+        } else {
+            Toast.makeText(this, "Gym not found", Toast.LENGTH_SHORT).show();
+            if (data != null) {
+                data.close();
+            }
+        }
+    }
+
+    /**
+     * Remove bookmark
+     * @param gymId The ID of the gym to unbookmark
+     */
+    public void removeBookmark(long gymId) {
+        BookmarkHelper.removeBookmark(this, gymId);
+        adapter1.notifyDataSetChanged();
+    }
+
+    /**
+     * Toggle bookmark status
+     * @param gymId The ID of the gym
+     */
+    public void toggleBookmark(long gymId) {
+        BookmarkHelper.toggleBookmark(this, gymId);
+        adapter1.notifyDataSetChanged();
+    }
+
+    /**
+     * Check if a gym is bookmarked (useful for updating UI)
+     * @param gymId The ID of the gym
+     * @return true if bookmarked
+     */
+    public boolean isGymBookmarked(long gymId) {
+        return BookmarkHelper.isBookmarked(this, gymId);
+    }
 
     public void populateContent() {
         Cursor data = getContentResolver().query(uri, null, null, null, null, null);
-        if(data.getCount() == 0) {
+
+        if(data != null && data.getCount() == 0) {
             ContentValues values = new ContentValues();
 
-            values.put("Name", "LA Fitness");
-            values.put("Distance", "2.3");
-            values.put("Description", "");
-            Uri newUri = getContentResolver().insert(uri, values);
-            values.clear();
-
-            values.put("Name", "Music City Muscle Gym");
-            values.put("Distance", "3.6");
-            values.put("Description", "");
+            values.put(gymContentProvider.COL_NAME, "LA Fitness");
+            values.put(gymContentProvider.COL_DISTANCE, 2);
+            values.put(gymContentProvider.COL_DESCRIPTION, "Full-service gym with cardio, weights, pool, and group classes");
             getContentResolver().insert(uri, values);
             values.clear();
 
-            values.put("Name", "Downtown YMCA");
-            values.put("Distance", "2.3");
-            values.put("Description", "");
+            values.put(gymContentProvider.COL_NAME, "Music City Muscle Gym");
+            values.put(gymContentProvider.COL_DISTANCE, 4);
+            values.put(gymContentProvider.COL_DESCRIPTION, "Hardcore bodybuilding gym with heavy equipment and personal training");
             getContentResolver().insert(uri, values);
             values.clear();
 
-            values.put("Name", "Fit Factory Nashville");
-            values.put("Distance", "1.9");
-            values.put("Description", "");
+            values.put(gymContentProvider.COL_NAME, "Downtown YMCA");
+            values.put(gymContentProvider.COL_DISTANCE, 2);
+            values.put(gymContentProvider.COL_DESCRIPTION, "Community fitness center with family programs and swimming facilities");
             getContentResolver().insert(uri, values);
             values.clear();
 
-            values.put("Name", "GetFit Anytime");
-            values.put("Distance", "1.2");
-            values.put("Description", "");
+            values.put(gymContentProvider.COL_NAME, "Fit Factory Nashville");
+            values.put(gymContentProvider.COL_DISTANCE, 2);
+            values.put(gymContentProvider.COL_DESCRIPTION, "Modern 24/7 fitness facility with state-of-the-art equipment");
             getContentResolver().insert(uri, values);
             values.clear();
 
-            values.put("Name", "STEPS Fitness");
-            values.put("Distance", "0.6");
-            values.put("Description", "");
+            values.put(gymContentProvider.COL_NAME, "GetFit Anytime");
+            values.put(gymContentProvider.COL_DISTANCE, 1);
+            values.put(gymContentProvider.COL_DESCRIPTION, "24-hour access gym with flexible membership options");
             getContentResolver().insert(uri, values);
             values.clear();
 
-            values.put("Name", "CROSSFIT PRVN NASHVILLE");
-            values.put("Distance", "1.4");
-            values.put("Description", "");
+            values.put(gymContentProvider.COL_NAME, "STEPS Fitness");
+            values.put(gymContentProvider.COL_DISTANCE, 1);
+            values.put(gymContentProvider.COL_DESCRIPTION, "Boutique fitness studio specializing in HIIT and functional training");
             getContentResolver().insert(uri, values);
             values.clear();
 
-            values.put("Name", "Next Level Fitness");
-            values.put("Distance", "2.2");
-            values.put("Description", "");
+            values.put(gymContentProvider.COL_NAME, "CROSSFIT PRVN NASHVILLE");
+            values.put(gymContentProvider.COL_DISTANCE, 1);
+            values.put(gymContentProvider.COL_DESCRIPTION, "CrossFit box with certified coaches and community-focused training");
             getContentResolver().insert(uri, values);
             values.clear();
 
-            values.put("Name", "Fuse Fitness");
-            values.put("Distance", "1.8");
-            values.put("Description", "");
+            values.put(gymContentProvider.COL_NAME, "Next Level Fitness");
+            values.put(gymContentProvider.COL_DISTANCE, 2);
+            values.put(gymContentProvider.COL_DESCRIPTION, "Personal training focused gym with customized workout programs");
             getContentResolver().insert(uri, values);
             values.clear();
 
-            values.put("Name", "Fitness: 1440 South");
-            values.put("Distance", "4.0");
-            values.put("Description", "");
+            values.put(gymContentProvider.COL_NAME, "Fuse Fitness");
+            values.put(gymContentProvider.COL_DISTANCE, 2);
+            values.put(gymContentProvider.COL_DESCRIPTION, "Group training and boot camp style workouts for all fitness levels");
             getContentResolver().insert(uri, values);
             values.clear();
+
+            values.put(gymContentProvider.COL_NAME, "Fitness: 1440 South");
+            values.put(gymContentProvider.COL_DISTANCE, 4);
+            values.put(gymContentProvider.COL_DESCRIPTION, "Comprehensive fitness center with spa amenities and nutrition coaching");
+            getContentResolver().insert(uri, values);
+            values.clear();
+
+            Log.i("populateContent", "Added 10 gyms to database");
+        }
+
+        if (data != null) {
+            data.close();
         }
     }
 }

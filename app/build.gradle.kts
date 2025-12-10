@@ -17,6 +17,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -46,6 +50,9 @@ dependencies {
     implementation(libs.cardview)
     implementation(libs.recyclerview)
     implementation(libs.viewpager2)
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
