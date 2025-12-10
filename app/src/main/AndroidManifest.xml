@@ -25,6 +25,11 @@
             android:authorities="com.example.golift.search.gymContentProvider"
             android:enabled="true"
             android:exported="true" /> <!-- Workout Activity -->
+        <provider
+            android:name=".saved.bookmarkedContentProvider"
+            android:authorities="com.example.golift.bookmarkedContentProvider"
+            android:exported="false" />
+
         <activity
             android:name=".workout.WorkoutActivity"
             android:exported="false" /> <!-- Profile Activity -->
