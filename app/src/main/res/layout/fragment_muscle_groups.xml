@@ -55,7 +55,8 @@
                         android:id="@+id/backTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="@string/shoulderHeader"
+                        android:textSize="20sp" />
 
                     <ListView
                         android:id="@+id/backLV"
@@ -79,7 +80,8 @@
                         android:id="@+id/chestTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="@string/chestHeader"
+                        android:textSize="20sp" />
 
                     <ListView
                         android:id="@+id/chestLV"
@@ -103,7 +105,8 @@
                         android:id="@+id/legsTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="@string/legsHeader"
+                        android:textSize="20sp" />
 
                     <ListView
                         android:id="@+id/legsLV"
@@ -127,7 +130,8 @@
                         android:id="@+id/shouldersTItle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="@string/shoulderHeader"
+                        android:textSize="20sp" />
 
                     <ListView
                         android:id="@+id/shouldersLV"
@@ -152,7 +156,8 @@
                         android:id="@+id/tricepsTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="@string/tricepHeader"
+                        android:textSize="20sp" />
 
                     <ListView
                         android:id="@+id/tricepsLV"

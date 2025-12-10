@@ -199,8 +199,15 @@ public class muscleGroupsFrag extends Fragment {
         lv6 = view.findViewById(R.id.tricepsLV);
         lv6.setVisibility(GONE);
 
+        adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_list_item_1, exerciseList);
 
-
+        lv1.setAdapter(adapter);
+        lv2.setAdapter(adapter);
+        lv3.setAdapter(adapter);
+        lv4.setAdapter(adapter);
+        lv5.setAdapter(adapter);
+        lv6.setAdapter(adapter);
 
 
 

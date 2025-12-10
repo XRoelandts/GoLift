@@ -22,6 +22,13 @@
     <string name="workoutHeader">Workouts</string>
 
     <string name="bicepHeader">Biceps</string>
+    <string name="tricepHeader">Triceps</string>
+    <string name="backHeader">Back</string>
+    <string name="chestHeader">Chest</string>
+    <string name="legsHeader">Legs</string>
+    <string name="bicepHeader">Biceps</string>
+    <string name="shoulderHeader">Shoulders</string>
+
 
 
     <!--       Home Page Strings              -->

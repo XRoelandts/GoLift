@@ -62,6 +62,7 @@ public class workoutsFrag extends Fragment {
         View view = inflater.inflate(R.layout.fragment_workouts, container, false);
 
         newWork = view.findViewById(R.id.newWorkB);
+        newWork.setOnClickListener(addnewListener);
 
         LL = view.findViewById(R.id.LL);
 
